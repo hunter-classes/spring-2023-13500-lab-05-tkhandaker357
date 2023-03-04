@@ -26,10 +26,8 @@ auto isPrime(int num) -> bool {
 }
 
 auto nextPrime(int num) -> int {
-    int i{ (isPrime(num) ? num + 1 : num) };
-    while (isPrime(i) == false) {
-        ++i;
-    }
+    int i{ isPrime(num) ? num + 1 : num };
+    for (i; isPrime(i) == false; ++i);
     return i;
 }
 
@@ -48,21 +46,26 @@ auto isTwinPrime(int num) -> bool {
     if (isPrime(num) == false)
         return false;
     
-    if (isPrime(num + 2) == false || isPrime(num - 2) == false) 
-        return false;
+    if (isPrime(num + 2) == true || isPrime(num - 2) == true) 
+        return true;
 
-    return true;
+    return false;
 }
 
 auto nextTwinPrime(int num) -> int {
-    int prime{ nextPrime(num) };
-    
-    while (isTwinPrime(prime) == false)
-        prime = nextPrime(prime);
-    
-    return prime;
+    int i{ isTwinPrime(num) ? nextPrime(num) : num };
+    for (i; isTwinPrime(i) == false; i = nextPrime(i));
+    return i;
 }
 
 auto largestTwinPrime(int a, int b) -> int {
-    
+    int currentTwinPrime{ -1 };
+
+    for (int i{ a }; i < b; ++i) {
+        if (nextTwinPrime(i) > b)
+            return currentTwinPrime;
+        currentTwinPrime = nextTwinPrime(i);
+    }
+
+    return currentTwinPrime;
 }
