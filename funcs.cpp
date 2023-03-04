@@ -34,9 +34,9 @@ auto nextPrime(int num) -> int {
 auto countPrimes(int a, int b) -> int {
     int primes{ 0 };
 
-    for (int i{ a }; i <= b;) {
-        i = nextPrime(i);
-        ++primes;
+    for (int i{ a }; i <= b; i = nextPrime(i)) {
+        if (isPrime(i) == true) 
+            ++primes;
     }
 
     return primes;
@@ -61,7 +61,7 @@ auto nextTwinPrime(int num) -> int {
 auto largestTwinPrime(int a, int b) -> int {
     int currentTwinPrime{ -1 };
 
-    for (int i{ a }; i < b; ++i) {
+    for (int i{ a }; i <= b; ++i) {
         if (nextTwinPrime(i) > b)
             return currentTwinPrime;
         currentTwinPrime = nextTwinPrime(i);
